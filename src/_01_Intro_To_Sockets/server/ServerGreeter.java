@@ -6,11 +6,12 @@ import java.io.*;
 public class ServerGreeter extends Thread {
 	// 1. Create an object of the ServerSocket class
 	ServerSocket sock;
-
+	int port;
 	public ServerGreeter(int port) throws IOException {
 		// 2. Initialize the ServerSocket object. In the parameters,
 		// you must define the port at which the server will listen for connections.
 		sock = new ServerSocket(port);
+		this.port = port;
 		// *OPTIONAL* you can set a time limit for the server to wait by using the
 		// ServerSocket's setSoTimeout(int timeInMilliSeconds) method
 	}
@@ -76,13 +77,16 @@ public class ServerGreeter extends Thread {
 			return "ERROR!!!!!";
 		}
 	}
+	public int getPort() {
+		return port;
+	}
 
 	public static void main(String[] args) {
 		// 16. In a new thread, create an object of the ServerGreeter class and start
 		// the thread. Don't forget the try-catch.
 		Thread thread = new Thread(() -> {
 			try {
-				new ServerGreeter().run();
+				new ServerGreeter(6969).run();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
