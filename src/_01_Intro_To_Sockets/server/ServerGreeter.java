@@ -22,7 +22,7 @@ public class ServerGreeter extends Thread {
 		// 4. Make a while loop that continues looping as long as the boolean created in
 		// the previous step is true.
 		while (maybeItsTrueMaybeNot == true) {
-			System.out.println("run");
+			System.out.println("\nDebug: run\n");
 			// 5. Make a try-catch block that checks for two types Exceptions:
 			// SocketTimeoutException and IOException.
 			// Put steps 8 - 15 in the try block.
