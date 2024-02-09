@@ -9,8 +9,11 @@ import java.net.SocketTimeoutException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import _01_Intro_To_Sockets.client.ClientGreeter;
@@ -25,7 +28,7 @@ public class ChatApp {
 	JPanel panel = new JPanel();
 	JButton button = new JButton("Send");
 	JTextField text = new JTextField();
-
+	JLabel label = new JLabel();
 	void run() {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		int hoster = JOptionPane.showConfirmDialog(null, "Would you like to host a server?", "Chat App",
@@ -39,6 +42,8 @@ public class ChatApp {
 			text.setSize(100, 20);
 			text.setText("Enter Message Here");
 			panel.add(text);
+			panel.add(label);
+			label.setText("Messages Apear Here");
 			frame.pack();
 			frame.setVisible(true);
 			System.out.println("done");
@@ -58,14 +63,24 @@ public class ChatApp {
 					System.out.println("User Conected");
 					
 					DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-
-					System.out.println("Message from user: " + inputStream.readUTF());
-				
-					DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-
-					outputStream.writeUTF("Message Recived");
 					
-					socket.close();
+					DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+					button.addActionListener(e -> {
+	      				try {
+	      					outputStream.writeUTF(text.getText());
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+	      			});
+					
+					while(true) {
+					
+					label.setText(inputStream.readUTF());
+				
+					}
+					
+					
 				} catch (SocketTimeoutException e) {
 					e.printStackTrace();
 					System.out.println("SockeTimeoutException caught, server closed");
@@ -79,9 +94,45 @@ public class ChatApp {
 
 		} else if (hoster == 1) {
 			// client
-			ClientGreeter client;
-			client = new ClientGreeter();
-
+			String ipAddress = "localHost";
+			int port = Integer.parseInt(JOptionPane.showInputDialog("What is the port number"));
+			
+	      		try {
+	    	
+	      			
+	      			frame.setTitle("Client");
+	    			frame.add(panel);
+	    			panel.add(label);
+	    			label.setSize(100, 100);
+	    			text.setSize(100, 20);
+	    			text.setText("Enter Message Here");
+	    			panel.add(text);
+	    			panel.add(button);
+	    			label.setText("Messages Apear Here");
+	    			frame.pack();
+	    			frame.setVisible(true);
+	      			
+	      			Socket sock = new Socket(ipAddress, port);
+	      			DataOutputStream dataOutput = new DataOutputStream(sock.getOutputStream());
+	        
+	      			button.addActionListener(e -> {
+	      				try {
+							dataOutput.writeUTF(text.getText());
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+	      			});
+	      			
+	      			DataInputStream dataInput = new DataInputStream(sock.getInputStream());
+	        
+	      			while (true) {
+	      			label.setText(dataInput.readUTF());
+	      			}
+	      		}
+	      		catch (IOException e) {
+	      			e.printStackTrace();
+	      		}
 		}
 	}
 }

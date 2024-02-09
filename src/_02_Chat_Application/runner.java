@@ -4,8 +4,7 @@ public class runner {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ChatApp aaaaaa = new ChatApp();
-		aaaaaa.run();
+		ChatApp Ωº = new ChatApp();
+		Ωº.run(); 
 	}
-
 }
