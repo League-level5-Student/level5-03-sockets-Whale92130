@@ -35,6 +35,10 @@ public class ChatApp {
 				JOptionPane.YES_NO_OPTION);
 		if (hoster == 0) {
 			// host server
+			//set black
+			//text green
+			//size stuff
+			//html for ln break
 			frame.setTitle("Server");
 			JOptionPane.showMessageDialog(null, "Server started at: " + "\nPort: ");
 			frame.add(panel);
