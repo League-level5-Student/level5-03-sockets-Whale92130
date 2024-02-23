@@ -1,5 +1,6 @@
 package _02_Chat_Application;
 
+import java.awt.Color;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -40,14 +41,16 @@ public class ChatApp {
 			//size stuff
 			//html for ln break
 			frame.setTitle("Server");
-			JOptionPane.showMessageDialog(null, "Server started at: " + "\nPort: ");
 			frame.add(panel);
 			panel.add(button);
+			panel.setBackground(Color.DARK_GRAY);
+			label.setForeground(Color.green);
+			label.setBackground(Color.black);
 			text.setSize(100, 20);
 			text.setText("Enter Message Here");
 			panel.add(text);
 			panel.add(label);
-			label.setText("Messages Apear Here");
+			label.setText("1: Messages Apear Here");
 			frame.pack();
 			frame.setVisible(true);
 			System.out.println("done");
@@ -77,7 +80,6 @@ public class ChatApp {
 							e1.printStackTrace();
 						}
 	      			});
-					
 					while(true) {
 					
 					label.setText(inputStream.readUTF());
@@ -107,6 +109,9 @@ public class ChatApp {
 	      			frame.setTitle("Client");
 	    			frame.add(panel);
 	    			panel.add(label);
+	    			panel.setBackground(Color.DARK_GRAY);
+	    			label.setForeground(Color.green);
+	    			label.setBackground(Color.black);
 	    			label.setSize(100, 100);
 	    			text.setSize(100, 20);
 	    			text.setText("Enter Message Here");
